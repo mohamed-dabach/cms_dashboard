@@ -25,19 +25,12 @@ git clone https://github.com/mohamed-dabach/cms_dashboard
 
 2. Create the required directory structure:
 ```
-http://localhost/cms_dashboard/
-cms_dashboard/
-├── index.php
-├── prestashop/
-└── wordpress/
-
-Or if you want to access the dashboard directly in localhost/ follow this structuer
-
 http://localhost/
 htdocs/
 ├── index.php
 ├── prestashop/
 └── wordpress/
+other folders don't matter
 ```
 
 3. Move your existing WordPress projects into the `wordpress` directory and PrestaShop projects into the `prestashop` directory.
@@ -57,13 +50,13 @@ htdocs/
 
 5. Access the dashboard through your local server:
 ```
-http://localhost/ or http://localhost/cms_dashboard
+http://localhost/
 ```
 
 ## Directory Structure
 
 ```
-cms_dashboard/ (or directly in htdocs/)
+( htdocs/)
 ├── index.php
 ├── prestashop/
 │   ├── project1/
