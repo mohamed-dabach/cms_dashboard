@@ -4,6 +4,8 @@
 ```markdown
 # Dev Projects Dashboard
 
+
+
 A clean and modern dashboard to manage your local WordPress and PrestaShop development projects. Easily access your projects, phpMyAdmin, and development environments from a single interface.
 
 ## Features
@@ -15,6 +17,24 @@ A clean and modern dashboard to manage your local WordPress and PrestaShop devel
 - 🛠 Direct admin panel access
 - 📊 Project last modified dates
 - 🔗 PhpMyAdmin integration
+
+# Floder Structure
+
+cms/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── index.php
+├── prestashop/
+│   ├── project1/
+│   ├── project2/
+│   ├── project3/
+│   └── project4/
+└── wordpress/
+    ├── project1/
+    ├── project2/
+    ├── project3/
+    └── project4/
 
 ## Requirements
 
