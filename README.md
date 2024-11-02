@@ -1,5 +1,22 @@
 # Project Structure
 
+cms/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── index.php
+├── prestashop/
+│   ├── project1/
+│   ├── project2/
+│   ├── project3/
+│   └── project4/
+└── wordpress/
+    ├── project1/
+    ├── project2/
+    ├── project3/
+    └── project4/
+
+
 ## README.md
 ```markdown
 # Dev Projects Dashboard
