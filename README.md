@@ -2,6 +2,8 @@
 
 A simple PHP dashboard to manage and access your local WordPress and PrestaShop projects. The dashboard provides an easy way to navigate between different projects, access admin panels, and open projects in VS Code.
 
+![Dashboard Screenshot](/screenshot.png)
+
 ## Features
 
 - Clean, modern interface for managing multiple CMS projects
@@ -11,6 +13,8 @@ A simple PHP dashboard to manage and access your local WordPress and PrestaShop 
 - Direct link to phpMyAdmin
 - PHP info viewer
 - Responsive design
+
+![Dashboard Screenshot](/screenshot1.png)
 
 ## Setup
 
