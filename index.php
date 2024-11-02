@@ -98,8 +98,13 @@ function echo_htmlspecialchars($str)
         }
 
         .nav-tabs {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
             justify-content: space-between;
+            -ms-flex-wrap: wrap;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 30px;
@@ -112,13 +117,25 @@ function echo_htmlspecialchars($str)
             text-decoration: none;
             color: var(--text-color);
             font-weight: bold;
+            -webkit-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             transition: all 0.3s ease;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
             gap: 8px;
             border: 2px solid #bbb;
+            width: -webkit-fit-content;
+            width: -moz-fit-content;
             width: fit-content;
+            height: -webkit-fit-content;
+            height: -moz-fit-content;
             height: fit-content;
         }
 
@@ -135,6 +152,7 @@ function echo_htmlspecialchars($str)
         }
 
         .project-grid {
+            display: -ms-grid;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
@@ -144,12 +162,20 @@ function echo_htmlspecialchars($str)
             background-color: var(--card-background);
             border-radius: 10px;
             padding: 20px;
+            -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            -webkit-transition: -webkit-transform 0.3s ease;
+            transition: -webkit-transform 0.3s ease;
+            -o-transition: transform 0.3s ease;
             transition: transform 0.3s ease;
+            transition: transform 0.3s ease, -webkit-transform 0.3s ease;
         }
 
         .project-card:hover {
+            -webkit-transform: translateY(-1px);
+            -ms-transform: translateY(-1px);
             transform: translateY(-1px);
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
@@ -168,8 +194,11 @@ function echo_htmlspecialchars($str)
         }
 
         .project-links {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             gap: 15px;
+            -ms-flex-wrap: wrap;
             flex-wrap: wrap;
         }
 
@@ -179,6 +208,8 @@ function echo_htmlspecialchars($str)
             padding: 8px 15px;
             border-radius: 5px;
             font-size: 0.9em;
+            -webkit-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             transition: all 0.3s ease;
             background-color: #f8f9fa;
         }
@@ -208,8 +239,14 @@ function echo_htmlspecialchars($str)
         }
 
         .flex {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
             gap: 10px;
         }
@@ -248,6 +285,8 @@ function echo_htmlspecialchars($str)
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            -webkit-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             transition: all 0.3s ease;
 
 
