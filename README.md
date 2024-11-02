@@ -1,29 +1,50 @@
-# Project Structure
+# Local CMS Project Management Dashboard
 
-## README.md
-```markdown
-# Dev Projects Dashboard
-
-
-
-A clean and modern dashboard to manage your local WordPress and PrestaShop development projects. Easily access your projects, phpMyAdmin, and development environments from a single interface.
+A simple PHP dashboard to manage and access your local WordPress and PrestaShop projects. The dashboard provides an easy way to navigate between different projects, access admin panels, and open projects in VS Code.
 
 ## Features
 
-- 🎯 Clean and modern interface
-- 🎨 Responsive design
-- 💻 Quick access to VS Code
-- 🔄 WordPress and PrestaShop support
-- 🛠 Direct admin panel access
-- 📊 Project last modified dates
-- 🔗 PhpMyAdmin integration
+- Clean, modern interface for managing multiple CMS projects
+- Support for WordPress and PrestaShop projects
+- Quick access to project front-end, admin panels, and VS Code
+- Project search functionality
+- Direct link to phpMyAdmin
+- PHP info viewer
+- Responsive design
 
-# Floder Structure
+## Setup
 
-cms/
-├── README.md
-├── LICENSE
-├── .gitignore
+1. Clone the repository into your local server directory (e.g., `htdocs`):
+```bash
+git clone https://github.com/mohamed-dabach/cms_dashboard
+```
+
+2. Create the required directory structure:
+```
+cms_dashboard/
+├── index.php
+├── prestashop/
+└── wordpress/
+
+or
+
+htdocs/
+├── index.php
+├── prestashop/
+└── wordpress/
+```
+
+3. Move your existing WordPress projects into the `wordpress` directory and PrestaShop projects into the `prestashop` directory.
+
+4. Access the dashboard through your local server:
+```
+http://localhost/ or http://localhost/cms_dashboard
+```
+
+## Directory Structure
+
+```
+cms/ (or directly in htdocs/)
 ├── index.php
 ├── prestashop/
 │   ├── project1/
@@ -35,77 +56,25 @@ cms/
     ├── project2/
     ├── project3/
     └── project4/
+```
 
 ## Requirements
 
-- PHP 7.4 or higher
-- Local WordPress and/or PrestaShop installations
-- VS Code (optional, for IDE integration)
-
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/mohamed-dabach/dev-projects-dashboard.git
-   ```
-
-2. Place the files in your local development server directory
-3. Access through your local development server
+- PHP enabled web server (Apache/Nginx)
+- Local WordPress/PrestaShop installations
+- VS Code (for IDE integration)
 
 ## Usage
 
-1. Access the dashboard through your local development server
-2. Switch between WordPress and PrestaShop projects using the navigation tabs
-3. Click on project names to open them in your browser
-4. Use VS Code button to open projects in Visual Studio Code
-5. Access admin panels directly using the admin links
+- Click on "WP" or "PS" tabs to switch between WordPress and PrestaShop projects
+- Use the search bar to filter projects by name
+- Click on project names to view the front-end
+- Use "WP Admin" or "PS Admin" links to access admin panels
+- Click "VS Code" to open the project in Visual Studio Code
+- Access phpMyAdmin directly through the dashboard
+- View PHP configuration through the PHP Info tab
 
-## Contributing
+## Notes
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
-
-## .gitignore
-```
-# IDE files
-.idea/
-.vscode/
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-```
-
-## LICENSE
-```
-MIT License
-
-Copyright (c) 2024 Mohamed Dabach
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+- Ensure your web server has proper permissions to read the project directories
+- The VS Code integration requires the VS Code protocol handler to be installed on your system
