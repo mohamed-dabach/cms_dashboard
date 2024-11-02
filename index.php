@@ -1,8 +1,9 @@
 <?php
 // Configuration
 $base_paths = [
-    'wordpress' => __DIR__ . '/wordpress',
-    'prestashop' => __DIR__ . '/prestashop'
+    'wordpress' => '/wordpress',
+    'prestashop' =>  '/prestashop',
+
 ];
 
 $base_urls = [
@@ -10,29 +11,56 @@ $base_urls = [
     'prestashop' => './prestashop/'
 ];
 
-// Helper functions
+
+// get project name from path
 function getProjectName($dir)
 {
     return basename($dir);
 }
 
-function getLastModified($dir)
+
+// get the creation date
+function get_create_at($dir)
 {
-    return date("F d, Y H:i:s", filemtime($dir));
+
+    return date("M d, Y H:i:s", filectime($dir));
 }
 
-function getProjects($path)
+$search_query = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : "";
+
+// return shild folders of given path
+function getProjects($path, $search_query)
 {
-    return array_filter(glob($path . '/*'), 'is_dir');
+    $full_path = __DIR__ . $path;
+
+    $result = array_filter(glob($full_path . '/*'), 'is_dir');
+    $filtered_result = array_filter($result, function ($ele) use ($search_query) {
+        return str_contains(getProjectName($ele), $search_query);
+    });
+
+    usort($filtered_result, function ($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+
+    return $filtered_result;
 }
 
 // Get active tab from URL parameter, default to wordpress
-$active_tab = isset($_GET['type']) && in_array($_GET['type'], array_keys($base_paths))
-    ? $_GET['type']
-    : 'wordpress';
+$active_tab = isset($_GET['type']) ? htmlspecialchars($_GET['type']) : "wordpress";
+
 
 // Get projects for active tab
-$projects = getProjects($base_paths[$active_tab]);
+$projects = in_array($active_tab, array_keys($base_paths)) ? getProjects($base_paths[$active_tab], $search_query) : [];
+
+
+
+
+function echo_htmlspecialchars($str)
+{
+    echo htmlspecialchars($str);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -72,14 +100,15 @@ $projects = getProjects($base_paths[$active_tab]);
         .nav-tabs {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 30px;
         }
 
         .nav-tab {
             padding: 10px 20px;
-            background-color: var(--card-background);
             border-radius: 5px;
+            background-color: var(--card-background);
             text-decoration: none;
             color: var(--text-color);
             font-weight: bold;
@@ -89,6 +118,8 @@ $projects = getProjects($base_paths[$active_tab]);
             align-items: center;
             gap: 8px;
             border: 2px solid #bbb;
+            width: fit-content;
+            height: fit-content;
         }
 
         .nav-tab:hover,
@@ -162,6 +193,7 @@ $projects = getProjects($base_paths[$active_tab]);
             padding: 40px;
             color: #666;
             font-style: italic;
+            width: 100%;
         }
 
         svg {
@@ -177,7 +209,52 @@ $projects = getProjects($base_paths[$active_tab]);
 
         .flex {
             display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 10px;
+        }
+
+        .search-form-container {
+
+            margin: 20px 0;
+            text-align: center;
+            background-color: red;
+        }
+
+        .search-form {
+
+            display: inline-block;
+        }
+
+        .search-input {
+
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 2px solid #bbb;
+
+        }
+
+        .search-button {
+
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+
+        }
+
+        .search-button:hover {
+            background-color: var(--hover-color);
         }
     </style>
 
@@ -187,15 +264,46 @@ $projects = getProjects($base_paths[$active_tab]);
     <h1>Development Projects</h1>
 
     <nav class="nav-tabs">
-        <a href="/phpmyadmin" target="_blank" class="nav-tab">
-            <svg fill="#7f8c8d" width="800px" height="800px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <title>phpmyadmin</title>
-                <path d="M20.804 22.613c-2.973 0.042-5.808 0.573-8.448 1.514l0.183-0.057c-3.584 1.22-3.688 1.685-6.936 1.303-1.718-0.263-3.265-0.75-4.698-1.436l0.1 0.043c1.696 1.366 3.785 2.312 6.071 2.65l0.069 0.008c2.444-0.149 4.708-0.785 6.741-1.812l-0.099 0.045c2.215-0.774 4.768-1.222 7.426-1.222 0.137 0 0.273 0.001 0.409 0.004l-0.020-0c3.437 0.216 6.645 0.763 9.727 1.614l-0.332-0.078c-1.791-0.855-3.889-1.593-6.074-2.107l-0.216-0.043c-1.147-0.27-2.464-0.425-3.817-0.425-0.030 0-0.060 0-0.090 0l0.005-0zM28.568 17.517l-22.394 3.81c1.127 0.399 1.921 1.455 1.921 2.697 0 0.042-0.001 0.084-0.003 0.125l0-0.006c-0.011 0.276-0.058 0.536-0.138 0.783l0.006-0.020c2.266-1.041 4.916-1.918 7.675-2.498l0.25-0.044c1.478-0.336 3.175-0.528 4.917-0.528 1.035 0 2.055 0.068 3.054 0.2l-0.117-0.013c0.908-2.119 2.635-3.741 4.772-4.489l0.057-0.017zM10.052 5.394s3.007 1.332 4.156 6.932c0.236 0.86 0.372 1.848 0.372 2.867 0 1.569-0.321 3.063-0.902 4.42l0.028-0.073c1.648-1.56 3.878-2.518 6.332-2.518 0.854 0 1.68 0.116 2.465 0.333l-0.065-0.015c-0.462-2.86-1.676-5.378-3.431-7.418l0.017 0.020c-2.128-2.674-5.334-4.411-8.95-4.548l-0.022-0.001zM7.831 5.348c1.551 2.219 2.556 4.924 2.767 7.849l0.003 0.051c0.033 0.384 0.051 0.83 0.051 1.281 0 1.893-0.326 3.71-0.926 5.397l0.035-0.113c0.906-1.076 2.215-1.788 3.692-1.902l0.018-0.001c0.062-0.005 0.124-0.008 0.185-0.010 0.083-0.603 0.13-1.3 0.13-2.008 0-2.296-0.498-4.476-1.391-6.437l0.040 0.097c-0.865-1.999-2.516-3.519-4.552-4.19l-0.053-0.015z"></path>
-            </svg>
-            PhpMyAdmin
+        <div class="flex">
+            <a href="/phpmyadmin" target="_blank" class="nav-tab">
+                <svg fill="#7f8c8d" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <title>phpmyadmin</title>
+                    <path d="M20.804 22.613c-2.973 0.042-5.808 0.573-8.448 1.514l0.183-0.057c-3.584 1.22-3.688 1.685-6.936 1.303-1.718-0.263-3.265-0.75-4.698-1.436l0.1 0.043c1.696 1.366 3.785 2.312 6.071 2.65l0.069 0.008c2.444-0.149 4.708-0.785 6.741-1.812l-0.099 0.045c2.215-0.774 4.768-1.222 7.426-1.222 0.137 0 0.273 0.001 0.409 0.004l-0.020-0c3.437 0.216 6.645 0.763 9.727 1.614l-0.332-0.078c-1.791-0.855-3.889-1.593-6.074-2.107l-0.216-0.043c-1.147-0.27-2.464-0.425-3.817-0.425-0.030 0-0.060 0-0.090 0l0.005-0zM28.568 17.517l-22.394 3.81c1.127 0.399 1.921 1.455 1.921 2.697 0 0.042-0.001 0.084-0.003 0.125l0-0.006c-0.011 0.276-0.058 0.536-0.138 0.783l0.006-0.020c2.266-1.041 4.916-1.918 7.675-2.498l0.25-0.044c1.478-0.336 3.175-0.528 4.917-0.528 1.035 0 2.055 0.068 3.054 0.2l-0.117-0.013c0.908-2.119 2.635-3.741 4.772-4.489l0.057-0.017zM10.052 5.394s3.007 1.332 4.156 6.932c0.236 0.86 0.372 1.848 0.372 2.867 0 1.569-0.321 3.063-0.902 4.42l0.028-0.073c1.648-1.56 3.878-2.518 6.332-2.518 0.854 0 1.68 0.116 2.465 0.333l-0.065-0.015c-0.462-2.86-1.676-5.378-3.431-7.418l0.017 0.020c-2.128-2.674-5.334-4.411-8.95-4.548l-0.022-0.001zM7.831 5.348c1.551 2.219 2.556 4.924 2.767 7.849l0.003 0.051c0.033 0.384 0.051 0.83 0.051 1.281 0 1.893-0.326 3.71-0.926 5.397l0.035-0.113c0.906-1.076 2.215-1.788 3.692-1.902l0.018-0.001c0.062-0.005 0.124-0.008 0.185-0.010 0.083-0.603 0.13-1.3 0.13-2.008 0-2.296-0.498-4.476-1.391-6.437l0.040 0.097c-0.865-1.999-2.516-3.519-4.552-4.19l-0.053-0.015z"></path>
+                </svg>
+                PhpMyAdmin
 
 
-        </a>
+            </a>
+            <a href="?type=phpinfo" class="nav-tab <?php echo $active_tab === 'phpinfo' ? 'active' : ''; ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#7f8c8d" version="1.1" width="20px" height="20px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+
+                    <g id="5151e0c8492e5103c096af88a51e2ea6">
+
+                        <path display="inline" d="M401.054,224c3.714,4.115,4.595,11.181,2.653,21.19c-2.029,10.425-5.935,17.862-11.723,22.32   c-5.793,4.458-14.602,6.687-26.432,6.687h-17.849l10.957-56.37h20.103C389.913,217.827,397.34,219.886,401.054,224z    M149.754,217.827h-20.103l-10.958,56.37h17.848c11.827,0,20.639-2.229,26.432-6.687c5.789-4.458,9.694-11.896,11.723-22.32   c1.942-10.01,1.06-17.075-2.653-21.19C168.33,219.886,160.903,217.827,149.754,217.827z M511.5,256   c0,74.229-114.393,134.403-255.5,134.403S0.5,330.229,0.5,256c0-74.228,114.393-134.403,255.5-134.403S511.5,181.772,511.5,256z    M198.542,265.286c3.04-5.448,5.203-11.461,6.483-18.037c3.102-15.967,0.761-28.403-7.024-37.313   c-7.781-8.91-20.165-13.363-37.136-13.363h-56.423L78.265,331.261h29.342l6.958-35.805h25.134c11.087,0,20.21-1.164,27.372-3.497   c7.161-2.329,13.669-6.233,19.528-11.719C191.514,275.72,195.493,270.738,198.542,265.286z M301.814,295.456l12.181-62.682   c2.479-12.747,0.619-21.971-5.572-27.664c-6.196-5.688-17.449-8.537-33.768-8.537h-25.933l6.961-35.81h-29.11l-26.182,134.692   h29.11l14.996-77.165h23.267c7.448,0,12.317,1.232,14.604,3.698c2.287,2.467,2.773,7.091,1.455,13.869l-11.581,59.598H301.814z    M427.011,209.937c-7.78-8.91-20.164-13.363-37.135-13.363h-56.424l-26.178,134.688h29.343l6.957-35.805h25.135   c11.086,0,20.21-1.164,27.371-3.497c7.161-2.329,13.669-6.233,19.528-11.719c4.92-4.521,8.896-9.502,11.943-14.954   c3.044-5.448,5.202-11.461,6.483-18.037C437.137,231.282,434.796,218.846,427.011,209.937z">
+
+                        </path>
+
+                    </g>
+
+                </svg>
+                Phpinfo
+
+            </a>
+        </div>
+        <!-- search projects form -->
+        <?php if (in_array($active_tab, array_keys($base_paths))): ?>
+            <div class="flex ">
+                <form method="get" class="search-form">
+                    <!-- i added this hidden input to filter with the type too -->
+                    <!-- as the form removes other query params like ex:type -->
+                    <input type="hidden" name="type" value="<?php echo_htmlspecialchars($active_tab); ?>">
+                    <input type="text" value="<?php echo_htmlspecialchars($search_query) ?>" placeholder="search" name="search" class="search-input">
+                    <button type="submit" class="search-button">search</button>
+                </form>
+            </div>
+        <?php endif ?>
+
+        <!--   -->
         <div class="flex">
 
 
@@ -234,49 +342,63 @@ $projects = getProjects($base_paths[$active_tab]);
         </div>
     </nav>
 
-    <div class="project-grid">
-        <?php if (empty($projects)): ?>
-            <div class="empty-state">
-                No <?php echo ucfirst($active_tab); ?> projects found.
-            </div>
-        <?php else: ?>
-            <?php foreach ($projects as $project):
-                $projectName = getProjectName($project);
-                $baseUrl = $base_urls[$active_tab];
-            ?>
-                <div class="project-card">
-                    <a href="<?php echo htmlspecialchars($baseUrl . $projectName); ?>"
-                        class="project-name"
-                        target="_blank">
-                        <?php echo htmlspecialchars($projectName); ?>
-                    </a>
-                    <div class="project-date">
-                        <?php echo htmlspecialchars(getLastModified($project)); ?>
-                    </div>
-                    <div class="project-links">
-                        <a href="<?php echo htmlspecialchars("vscode://file/" . $project); ?>"
-                            class="project-link"
-                            target="_blank">
-                            VS Code
-                        </a>
-                        <?php if ($active_tab === 'wordpress'): ?>
-                            <a href="<?php echo htmlspecialchars($baseUrl . $projectName . "/wp-admin"); ?>"
-                                class="project-link"
-                                target="_blank">
-                                WP Admin
-                            </a>
-                        <?php else: ?>
-                            <a href="<?php echo htmlspecialchars($baseUrl . $projectName . "/admin"); ?>"
-                                class="project-link"
-                                target="_blank">
-                                PS Admin
-                            </a>
-                        <?php endif; ?>
-                    </div>
+    <!-- show php info -->
+
+    <?php if ($active_tab === "phpinfo"): ?>
+        <div class="phpinfo-container">
+            <?php echo phpinfo() ?>
+        </div>
+    <?php else : ?>
+
+        <div class="project-grid">
+
+
+
+            <!-- show projects -->
+            <?php if (empty($projects)): ?>
+                <div class="empty-state">
+                    No <?php echo ucfirst($active_tab); ?> projects found.
                 </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
+            <?php else: ?>
+                <?php foreach ($projects as $project):
+                    $projectName = getProjectName($project);
+                    $baseUrl = $base_urls[$active_tab];
+                ?>
+                    <div class="project-card">
+                        <a href="<?php echo htmlspecialchars($baseUrl . $projectName); ?>"
+                            class="project-name"
+                            target="_blank">
+                            <?php echo htmlspecialchars($projectName); ?>
+                        </a>
+                        <div class="project-date">
+                            <?php echo_htmlspecialchars(get_create_at($project)); ?>
+                        </div>
+                        <div class="project-links">
+                            <a href="<?php echo_htmlspecialchars("vscode://file/" . $project); ?>"
+                                class="project-link"
+                                target="_blank">
+                                VS Code
+                            </a>
+                            <?php if ($active_tab === 'wordpress'): ?>
+                                <a href="<?php echo_htmlspecialchars($baseUrl . $projectName . "/wp-admin"); ?>"
+                                    class="project-link"
+                                    target="_blank">
+                                    WP Admin
+                                </a>
+                            <?php else: ?>
+                                <a href="<?php echo_htmlspecialchars($baseUrl . $projectName . "/admin"); ?>"
+                                    class="project-link"
+                                    target="_blank">
+                                    PS Admin
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
 </body>
 
 </html>
