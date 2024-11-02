@@ -1,8 +1,7 @@
 # Project Structure
 
 ## README.md
-
-````markdown
+```markdown
 # Dev Projects Dashboard
 
 A clean and modern dashboard to manage your local WordPress and PrestaShop development projects. Easily access your projects, phpMyAdmin, and development environments from a single interface.
@@ -27,35 +26,11 @@ A clean and modern dashboard to manage your local WordPress and PrestaShop devel
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/dev-projects-dashboard.git
-   ```
-````
-
-2. Copy `config.example.php` to `config.php` and update the paths:
-
-   ```bash
-   cp config.example.php config.php
+   git clone https://github.com/mohamed-dabach/dev-projects-dashboard.git
    ```
 
-3. Configure your paths in `config.php`
-
-4. Place the files in your local development server directory
-
-## Configuration
-
-Edit `config.php` to set your project paths:
-
-```php
-$base_paths = [
-    'wordpress' => '/path/to/wordpress/projects',
-    'prestashop' => '/path/to/prestashop/projects'
-];
-
-$base_urls = [
-    'wordpress' => 'http://localhost/wordpress/',
-    'prestashop' => 'http://localhost/prestashop/'
-];
-```
+2. Place the files in your local development server directory
+3. Access through your local development server
 
 ## Usage
 
@@ -72,30 +47,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-````
-
-## config.example.php
-```php
-<?php
-// Configuration
-$base_paths = [
-    'wordpress' => __DIR__ . '/wordpress',
-    'prestashop' => __DIR__ . '/prestashop'
-];
-
-$base_urls = [
-    'wordpress' => './wordpress/',
-    'prestashop' => './prestashop/'
-];
-````
+```
 
 ## .gitignore
-
 ```
-# Configuration
-config.php
-
 # IDE files
 .idea/
 .vscode/
@@ -111,11 +66,10 @@ Thumbs.db
 ```
 
 ## LICENSE
-
 ```
 MIT License
 
-Copyright (c) 2024 [Your Name]
+Copyright (c) 2024 Mohamed Dabach
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
