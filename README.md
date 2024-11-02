@@ -21,13 +21,15 @@ git clone https://github.com/mohamed-dabach/cms_dashboard
 
 2. Create the required directory structure:
 ```
+http://localhost/cms_dashboard/
 cms_dashboard/
 ├── index.php
 ├── prestashop/
 └── wordpress/
 
-or
+Or if you want to access the dashboard directly in localhost/ follow this structuer
 
+http://localhost/
 htdocs/
 ├── index.php
 ├── prestashop/
@@ -44,7 +46,7 @@ http://localhost/ or http://localhost/cms_dashboard
 ## Directory Structure
 
 ```
-cms/ (or directly in htdocs/)
+cms_dashboard/ (or directly in htdocs/)
 ├── index.php
 ├── prestashop/
 │   ├── project1/
@@ -63,6 +65,7 @@ cms/ (or directly in htdocs/)
 - PHP enabled web server (Apache/Nginx)
 - Local WordPress/PrestaShop installations
 - VS Code (for IDE integration)
+- xampp
 
 ## Usage
 
