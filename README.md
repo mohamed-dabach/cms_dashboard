@@ -37,8 +37,21 @@ htdocs/
 ```
 
 3. Move your existing WordPress projects into the `wordpress` directory and PrestaShop projects into the `prestashop` directory.
+```
+├── index.php
+├── prestashop/
+│   ├── project1/
+│   ├── project2/
+│   ├── project3/
+│   └── project4/
+└── wordpress/
+    ├── project1/
+    ├── project2/
+    ├── project3/
+    └── project4/
+```
 
-4. Access the dashboard through your local server:
+5. Access the dashboard through your local server:
 ```
 http://localhost/ or http://localhost/cms_dashboard
 ```
